@@ -5,6 +5,9 @@ import axios from "axios";
 import Table from "../Table/Table";
 import Pagination from "../Pagination/Pagination";
 
+// Importing styles
+import "./AdminPage.css";
+
 const API_URL =
   "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
@@ -74,8 +77,13 @@ const AdminPage = () => {
       {loading ? (
         <h2>Loading</h2>
       ) : (
-        <>
-          <Table users={currentUsers} deleteUser={deleteUser} />
+        <div className="container">
+          <Table
+            totalUsers={users}
+            users={currentUsers}
+            setUsers={setUsers}
+            deleteUser={deleteUser}
+          />
           <Pagination
             usersPerPage={usersPerPage}
             totalUsers={users.length}
@@ -84,7 +92,7 @@ const AdminPage = () => {
             nextPage={nextPage}
             selectedPage={currentPage}
           />
-        </>
+        </div>
       )}
     </div>
   );

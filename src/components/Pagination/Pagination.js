@@ -26,15 +26,21 @@ const Pagination = ({
     <nav className="paginationNav">
       <ul className="pagination">
         <li>
-          <a onClick={() => paginate(1)} href="#">
+          <div className="icons" onClick={() => paginate(1)}>
             <FaAngleDoubleLeft />
-          </a>
+          </div>
+          {/* <a onClick={() => paginate(1)} href="#">
+            <FaAngleDoubleLeft />
+          </a> */}
         </li>
 
         <li>
-          <a onClick={() => prevPage()} href="#">
+          <div className="icons" onClick={() => prevPage()}>
             <FaAngleLeft />
-          </a>
+          </div>
+          {/* <a onClick={() => prevPage()} href="#">
+            <FaAngleLeft />
+          </a> */}
         </li>
         {pageNumbers.map((number) => (
           <li key={number} className="page">
@@ -59,14 +65,20 @@ const Pagination = ({
           </li>
         ))}
         <li>
-          <a onClick={() => nextPage(pageNumbers.length)} href="#">
+          {/* <a onClick={() => nextPage(pageNumbers.length)} href="#">
             <FaAngleRight />
-          </a>
+          </a> */}
+          <div className="icons" onClick={() => nextPage(pageNumbers.length)}>
+            <FaAngleRight />
+          </div>
         </li>
         <li>
-          <a onClick={() => paginate(pageNumbers.length)} href="#">
+          <div className="icons" onClick={() => paginate(pageNumbers.length)}>
             <FaAngleDoubleRight />
-          </a>
+          </div>
+          {/* <a onClick={() => paginate(pageNumbers.length)} href="#">
+            <FaAngleDoubleRight />
+          </a> */}
         </li>
       </ul>
     </nav>

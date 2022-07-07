@@ -1,11 +1,70 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
+import ReadOnlyRow from "../ReadOnlyRow/ReadOnlyRow";
+import EditableRow from "../EditableRow/EditableRow";
 
 // Importing styles
 import "./Table.css";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 
-const Table = ({ users, deleteUser }) => {
+const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
+  const [editRowId, setEditRowId] = useState(null);
+
+  const [editUserData, setEditUserData] = useState({
+    name: "",
+    email: "",
+    role: "",
+  });
+
+  // When edit button is clicked
+  //
+  const clickEditUser = (user) => {
+    setEditRowId(user.id);
+    setEditUserData({ name: user.name, email: user.email, role: user.role });
+  };
+
+  // When the cancel edit button is clicked
+  //
+  const closeEditUser = () => {
+    setEditRowId(null);
+  };
+
+  // When user fields are getting edited
+  //
+  const handleEditUserChange = (event) => {
+    event.preventDefault();
+
+    setEditUserData({
+      ...editUserData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  // When the user submits the editted fields
+  //
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
+    const editedUser = {
+      id: editRowId,
+      name: editUserData.name,
+      email: editUserData.email,
+      role: editUserData.role,
+    };
+
+    const newUsers = totalUsers.map((user) => {
+      if (user.id === editRowId) {
+        return { ...user, ...editedUser };
+      }
+      return user;
+    });
+
+    console.log(newUsers);
+
+    setUsers(newUsers);
+    setEditRowId(null);
+  };
+
   return (
     <table className="tableStyle">
       <thead>
@@ -18,18 +77,24 @@ const Table = ({ users, deleteUser }) => {
       </thead>
       <tbody>
         {users.map((user) => (
-          <tr key={user.id}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-            <td>{user.role}</td>
-            <td>
-              <FaEdit />{" "}
-              <FaTrashAlt
-                className="deleteButton"
-                onClick={() => deleteUser(user.id)}
+          <Fragment key={user.id}>
+            {user.id === editRowId ? (
+              <EditableRow
+                key={user.id}
+                editUserData={editUserData}
+                handleEditUserChange={handleEditUserChange}
+                handleEditFormSubmit={handleEditFormSubmit}
+                closeEditUser={closeEditUser}
               />
-            </td>
-          </tr>
+            ) : (
+              <ReadOnlyRow
+                key={user.id}
+                user={user}
+                deleteUser={deleteUser}
+                clickEditUser={clickEditUser}
+              />
+            )}
+          </Fragment>
         ))}
       </tbody>
     </table>
