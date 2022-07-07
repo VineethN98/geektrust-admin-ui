@@ -1,0 +1,6 @@
+- replace loading with a spinner
+- Add basic tests like component is visible
+- Try and move the url to a .env file
+- Change a href to div
+- Hanlde case in Table component if no user is present
+- Separate out the functions in AdminPage in utils folder

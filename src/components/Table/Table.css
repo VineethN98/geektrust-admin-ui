@@ -1,0 +1,37 @@
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} */
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.tableStyle {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  /* width: 80rem; */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.tableStyle thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+.tableStyle th,
+.tableStyle td {
+  padding: 12px 15px;
+}
+
+.deleteButton:hover {
+  cursor: pointer;
+}
