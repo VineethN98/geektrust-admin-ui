@@ -4,9 +4,13 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 
-const ReadOnlyRow = ({ user, deleteUser, clickEditUser }) => {
+const ReadOnlyRow = ({ user, deleteUser, clickEditUser, selectUser }) => {
   return (
-    <tr>
+    // <tr>
+    <>
+      <td>
+        <input type="checkbox" onClick={() => selectUser(user)} />
+      </td>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.role}</td>
@@ -17,7 +21,8 @@ const ReadOnlyRow = ({ user, deleteUser, clickEditUser }) => {
           onClick={() => deleteUser(user.id)}
         />
       </td>
-    </tr>
+    </>
+    // </tr>
   );
 };
 

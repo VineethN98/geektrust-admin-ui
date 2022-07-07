@@ -12,7 +12,8 @@ const EditableRow = ({
   closeEditUser,
 }) => {
   return (
-    <tr>
+    <>
+      <td></td>
       <td>
         <input
           type="text"
@@ -47,7 +48,7 @@ const EditableRow = ({
         <FaCheck onClick={handleEditFormSubmit} />{" "}
         <FaWindowClose onClick={closeEditUser} />
       </td>
-    </tr>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
   const [editRowId, setEditRowId] = useState(null);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
   const [editUserData, setEditUserData] = useState({
     name: "",
@@ -27,6 +28,20 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
   //
   const closeEditUser = () => {
     setEditRowId(null);
+  };
+
+  // When the user checkbox is selected
+  //
+  const selectUser = (user) => {
+    let selectedIndices = [...selectedRowIds];
+    const index = selectedIndices.findIndex((id) => id === user.id);
+
+    if (index === -1) {
+      setSelectedRowIds(user.id);
+    } else {
+      selectedIndices.splice(index, 1);
+      setSelectedRowIds(selectedIndices);
+    }
   };
 
   // When user fields are getting edited
@@ -69,6 +84,9 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
     <table className="tableStyle">
       <thead>
         <tr>
+          <th>
+            <input type="checkbox" />
+          </th>
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
@@ -77,7 +95,12 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
       </thead>
       <tbody>
         {users.map((user) => (
-          <Fragment key={user.id}>
+          <tr
+            key={user.id}
+            className={
+              selectedRowIds.includes(user.id) ? "selectedRow" : "unSelectedRow"
+            }
+          >
             {user.id === editRowId ? (
               <EditableRow
                 key={user.id}
@@ -92,9 +115,10 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
                 user={user}
                 deleteUser={deleteUser}
                 clickEditUser={clickEditUser}
+                selectUser={selectUser}
               />
             )}
-          </Fragment>
+          </tr>
         ))}
       </tbody>
     </table>

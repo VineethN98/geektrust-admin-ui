@@ -37,3 +37,7 @@ body {
 .editButton:hover {
   cursor: pointer;
 }
+
+.selectedRow {
+  background-color: grey;
+}
