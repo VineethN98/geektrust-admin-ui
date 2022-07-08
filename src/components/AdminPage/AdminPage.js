@@ -40,16 +40,15 @@ const AdminPage = () => {
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const userSlice = users.slice(indexOfFirstUser, indexOfLastUser);
+    if (userSlice.length === 0) {
+      setCurrentPage(1);
+    }
     setCurrentUsers(userSlice);
   }, [users, currentPage]);
 
-  // TODO: Needs fixes, doesn't search if backspaced
+  // Search for users
+  //
   useEffect(() => {
-    console.log("Remaining users");
-    console.log(allUsers);
-
-    // Search for users if query is not empty
-    //
     const searchedUsers = allUsers.filter((user) => {
       if (user.name.toLowerCase().includes(query.toLowerCase())) {
         return user;
@@ -97,10 +96,6 @@ const AdminPage = () => {
   const handleSearchUser = (event) => {
     event.preventDefault();
 
-    if (event.target.value === "") {
-      setQuery("");
-    }
-
     setQuery(event.target.value);
   };
 
@@ -118,34 +113,30 @@ const AdminPage = () => {
 
   return (
     <div>
-      {loading ? (
-        <h2>Loading</h2>
-      ) : (
-        <div className="adminPage">
-          <SearchBar handleSearchUser={handleSearchUser} />
-          <div className="container">
-            <Table
-              totalUsers={users}
-              users={currentUsers}
-              setUsers={setUsers}
-              deleteUser={deleteUser}
-              setUserToBeDeleted={setUserToBeDeleted}
-            />
-            <div className="footer">
-              <DeleteButton handleDeleteUsers={handleDeleteUsers} />
+      <div className="adminPage">
+        <SearchBar handleSearchUser={handleSearchUser} />
+        <div className="container">
+          <Table
+            totalUsers={users}
+            users={currentUsers}
+            setUsers={setUsers}
+            deleteUser={deleteUser}
+            setUserToBeDeleted={setUserToBeDeleted}
+          />
+          <div className="footer">
+            <DeleteButton handleDeleteUsers={handleDeleteUsers} />
 
-              <Pagination
-                usersPerPage={usersPerPage}
-                totalUsers={users.length}
-                paginate={paginate}
-                prevPage={prevPage}
-                nextPage={nextPage}
-                selectedPage={currentPage}
-              />
-            </div>
+            <Pagination
+              usersPerPage={usersPerPage}
+              totalUsers={users.length}
+              paginate={paginate}
+              prevPage={prevPage}
+              nextPage={nextPage}
+              selectedPage={currentPage}
+            />
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

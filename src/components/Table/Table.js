@@ -28,6 +28,8 @@ const Table = ({
     setUserToBeDeleted([...selectedRowIds]);
   }, [selectedRowIds]);
 
+  // To reset states when the page changes
+  //
   useEffect(() => {
     setSelectedRowIds([]);
     setSelectAll(false);
@@ -119,18 +121,9 @@ const Table = ({
             <input
               type="checkbox"
               checked={selectAll}
-              //   onChange={() => setSelectAll(!selectAll)}
               onChange={handleSelectAll}
             />
           </th>
-          {/* <th>
-            <input
-              type="checkbox"
-              checked={selectAll}
-              //   onChange={() => setSelectAll(!selectAll)}
-              onChange={handleSelectAll}
-            />
-          </th> */}
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
