@@ -6,6 +6,7 @@ import Table from "../Table/Table";
 import Pagination from "../Pagination/Pagination";
 import SearchBar from "../SearchBar/SearchBar";
 import DeleteButton from "../DeleteButton/DeleteButton";
+import UsersNotFound from "../UsersNotFound/UsersNotFound";
 
 // Importing styles
 import "./AdminPage.css";
@@ -115,27 +116,31 @@ const AdminPage = () => {
     <div>
       <div className="adminPage">
         <SearchBar handleSearchUser={handleSearchUser} />
-        <div className="container">
-          <Table
-            totalUsers={users}
-            users={currentUsers}
-            setUsers={setUsers}
-            deleteUser={deleteUser}
-            setUserToBeDeleted={setUserToBeDeleted}
-          />
-          <div className="footer">
-            <DeleteButton handleDeleteUsers={handleDeleteUsers} />
-
-            <Pagination
-              usersPerPage={usersPerPage}
-              totalUsers={users.length}
-              paginate={paginate}
-              prevPage={prevPage}
-              nextPage={nextPage}
-              selectedPage={currentPage}
+        {users.length !== 0 ? (
+          <div className="container">
+            <Table
+              totalUsers={users}
+              users={currentUsers}
+              setUsers={setUsers}
+              deleteUser={deleteUser}
+              setUserToBeDeleted={setUserToBeDeleted}
             />
+            <div className={users.length !== 0 ? "footer" : "footer-none"}>
+              <DeleteButton handleDeleteUsers={handleDeleteUsers} />
+
+              <Pagination
+                usersPerPage={usersPerPage}
+                totalUsers={users.length}
+                paginate={paginate}
+                prevPage={prevPage}
+                nextPage={nextPage}
+                selectedPage={currentPage}
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <UsersNotFound />
+        )}
       </div>
     </div>
   );
