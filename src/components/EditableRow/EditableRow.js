@@ -6,14 +6,26 @@ import { FaCheck } from "react-icons/fa";
 
 //prettier-ignore
 const EditableRow = ({
+  user,
   editUserData,
   handleEditUserChange,
   handleEditFormSubmit,
   closeEditUser,
+  selectUser,
+  selectedRowIds,
 }) => {
+  const index = selectedRowIds.findIndex((id) => id === user.id);
+  const Checked = index === -1 ? false : true;
+
   return (
     <>
-      <td></td>
+      <td>
+          <input
+            type="checkbox"
+            onChange={() => selectUser(user)}
+            checked={Checked}
+          />
+      </td>
       <td>
         <input
           type="text"

@@ -16,7 +16,6 @@ const Table = ({
 }) => {
   const [editRowId, setEditRowId] = useState(null);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const [selectCurrentUsers, setSelectCurrentUsers] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
 
   const [editUserData, setEditUserData] = useState({
@@ -26,29 +25,22 @@ const Table = ({
   });
 
   useEffect(() => {
-    console.log(selectedRowIds);
     setUserToBeDeleted([...selectedRowIds]);
   }, [selectedRowIds]);
 
   useEffect(() => {
     setSelectedRowIds([]);
-    setSelectCurrentUsers(false);
-    // setSelectCurrentUsers(false);
+    setSelectAll(false);
   }, [users]);
 
   useEffect(() => {
-    console.log("Selecting all users");
-    console.log(selectCurrentUsers);
-    if (!selectCurrentUsers) {
-      console.log("If");
-      const usersArray = [...users];
-      const usersToBeDeleted = usersArray.map((user) => user.id);
-      setSelectedRowIds([...usersToBeDeleted]);
+    const userIDs = users.map((user) => user.id);
+    if (selectAll) {
+      setSelectedRowIds(userIDs);
     } else {
-      console.log("else");
       setSelectedRowIds([]);
     }
-  }, [selectCurrentUsers]);
+  }, [selectAll]);
 
   // When edit button is clicked
   //
@@ -79,10 +71,8 @@ const Table = ({
 
   // When all users are selected
   //
-  const selectAllUsers = (event) => {
-    console.log("Value of selectCurrentUsers");
-    console.log(selectCurrentUsers, selectAll);
-    setSelectCurrentUsers((selectCurrentUsers) => !selectCurrentUsers);
+  const handleSelectAll = () => {
+    setSelectAll((selectAll) => !selectAll);
   };
 
   // When user fields are getting edited
@@ -128,10 +118,19 @@ const Table = ({
           <th>
             <input
               type="checkbox"
-              onChange={selectAllUsers}
-              defaultChecked={selectCurrentUsers}
+              checked={selectAll}
+              //   onChange={() => setSelectAll(!selectAll)}
+              onChange={handleSelectAll}
             />
           </th>
+          {/* <th>
+            <input
+              type="checkbox"
+              checked={selectAll}
+              //   onChange={() => setSelectAll(!selectAll)}
+              onChange={handleSelectAll}
+            />
+          </th> */}
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
@@ -149,10 +148,13 @@ const Table = ({
             {user.id === editRowId ? (
               <EditableRow
                 key={user.id}
+                user={user}
                 editUserData={editUserData}
                 handleEditUserChange={handleEditUserChange}
                 handleEditFormSubmit={handleEditFormSubmit}
                 closeEditUser={closeEditUser}
+                selectedRowIds={selectedRowIds}
+                selectUser={selectUser}
               />
             ) : (
               <ReadOnlyRow

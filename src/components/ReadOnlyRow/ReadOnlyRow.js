@@ -21,9 +21,16 @@ const ReadOnlyRow = ({
         <input
           type="checkbox"
           onChange={() => selectUser(user)}
-          defaultChecked={Checked}
+          checked={Checked}
         />
       </td>
+      {/* <td>
+        <input
+          type="checkbox"
+          onChange={() => selectUser(user)}
+          checked={Checked}
+        />
+      </td> */}
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.role}</td>
