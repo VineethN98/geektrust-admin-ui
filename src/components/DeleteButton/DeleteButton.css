@@ -1,0 +1,12 @@
+.btn {
+  background-color: #ff6666;
+  color: white;
+  border-radius: 25px;
+  font-size: small;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 10px;
+  flex: 2 0 auto;
+}

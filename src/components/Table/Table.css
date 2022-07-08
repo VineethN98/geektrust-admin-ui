@@ -1,31 +1,23 @@
-/* *,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
-
-body {
-  display: flex;
-  justify-content: center;
-}
-
 .tableStyle {
   border-collapse: collapse;
-  margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
-  /* min-width: 400px; */
-  /* width: 800px; */
   width: 100%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 10px;
 }
 
 .tableStyle thead tr {
-  background-color: #009879;
-  color: #ffffff;
   text-align: left;
+  font-weight: 800;
+}
+
+.tableStyle tbody tr {
+  text-align: left;
+  font-weight: 300;
+}
+
+.tableStyle tr {
+  border-bottom: 1px solid #cccccc;
 }
 
 .tableStyle th,
@@ -39,5 +31,13 @@ body {
 }
 
 .selectedRow {
-  background-color: grey;
+  background-color: #d9d9d9;
+}
+
+.tableStyle th {
+  width: 100px;
+}
+
+.checkboxColumn {
+  width: 200px;
 }

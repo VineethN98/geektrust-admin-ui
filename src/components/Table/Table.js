@@ -115,7 +115,7 @@ const Table = ({
     <table className="tableStyle">
       <thead>
         <tr>
-          <th>
+          <th className="checkboxColumn">
             <input
               type="checkbox"
               checked={selectAll}

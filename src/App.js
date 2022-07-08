@@ -1,4 +1,3 @@
-import "./App.css";
 import AdminPage from "./components/AdminPage/AdminPage";
 
 function App() {

@@ -1,6 +1,7 @@
 import React from "react";
 
 // Importing styles
+import "./EditRow.css";
 import { FaWindowClose } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 
@@ -57,8 +58,8 @@ const EditableRow = ({
         ></input>
       </td>
       <td>
-        <FaCheck onClick={handleEditFormSubmit} />{" "}
-        <FaWindowClose onClick={closeEditUser} />
+        <FaCheck className="submitButton" onClick={handleEditFormSubmit} />{" "}
+        <FaWindowClose className="cancelButton" onClick={closeEditUser} />
       </td>
     </>
   );

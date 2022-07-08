@@ -5,6 +5,7 @@ import axios from "axios";
 import Table from "../Table/Table";
 import Pagination from "../Pagination/Pagination";
 import SearchBar from "../SearchBar/SearchBar";
+import DeleteButton from "../DeleteButton/DeleteButton";
 
 // Importing styles
 import "./AdminPage.css";
@@ -120,29 +121,28 @@ const AdminPage = () => {
       {loading ? (
         <h2>Loading</h2>
       ) : (
-        <div className="container">
+        <div className="adminPage">
           <SearchBar handleSearchUser={handleSearchUser} />
-          <Table
-            totalUsers={users}
-            users={currentUsers}
-            setUsers={setUsers}
-            deleteUser={deleteUser}
-            setUserToBeDeleted={setUserToBeDeleted}
-          />
-          {/* TODO: Create own component if needed */}
-          <div className="footer">
-            <div className="btn" onClick={handleDeleteUsers}>
-              Delete Users
-            </div>
-
-            <Pagination
-              usersPerPage={usersPerPage}
-              totalUsers={users.length}
-              paginate={paginate}
-              prevPage={prevPage}
-              nextPage={nextPage}
-              selectedPage={currentPage}
+          <div className="container">
+            <Table
+              totalUsers={users}
+              users={currentUsers}
+              setUsers={setUsers}
+              deleteUser={deleteUser}
+              setUserToBeDeleted={setUserToBeDeleted}
             />
+            <div className="footer">
+              <DeleteButton handleDeleteUsers={handleDeleteUsers} />
+
+              <Pagination
+                usersPerPage={usersPerPage}
+                totalUsers={users.length}
+                paginate={paginate}
+                prevPage={prevPage}
+                nextPage={nextPage}
+                selectedPage={currentPage}
+              />
+            </div>
           </div>
         </div>
       )}
