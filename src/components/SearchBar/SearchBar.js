@@ -9,7 +9,7 @@ const SearchBar = ({ handleSearchUser }) => {
       <input
         type="text"
         className="search-input"
-        placeholder="Search Users"
+        placeholder="Search by name, email or role"
         onChange={handleSearchUser}
       />
     </div>

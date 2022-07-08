@@ -44,16 +44,12 @@ const AdminPage = () => {
 
   // TODO: Needs fixes, doesn't search if backspaced
   useEffect(() => {
-    // Return all users if query is empty
-    //
-    if (query === "") {
-      setUsers(allUsers);
-      return;
-    }
+    console.log("Remaining users");
+    console.log(allUsers);
 
     // Search for users if query is not empty
     //
-    const searchedUsers = users.filter((user) => {
+    const searchedUsers = allUsers.filter((user) => {
       if (user.name.toLowerCase().includes(query.toLowerCase())) {
         return user;
       } else if (user.email.toLowerCase().includes(query.toLowerCase())) {
@@ -92,6 +88,7 @@ const AdminPage = () => {
     let usersLeft = [...users];
     usersLeft = usersLeft.filter((user) => user.id !== userId);
     setUsers(usersLeft);
+    setAllUsers(usersLeft);
   };
 
   // Search Users
@@ -115,6 +112,7 @@ const AdminPage = () => {
 
     usersLeft = usersLeft.filter((user) => !deletingUsers.includes(user.id));
     setUsers([...usersLeft]);
+    setAllUsers([...usersLeft]);
   };
 
   return (
