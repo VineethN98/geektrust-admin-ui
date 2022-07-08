@@ -125,7 +125,7 @@ const AdminPage = () => {
               deleteUser={deleteUser}
               setUserToBeDeleted={setUserToBeDeleted}
             />
-            <div className={users.length !== 0 ? "footer" : "footer-none"}>
+            <div className="footer">
               <DeleteButton handleDeleteUsers={handleDeleteUsers} />
 
               <Pagination
