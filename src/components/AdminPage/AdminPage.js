@@ -7,6 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import SearchBar from "../SearchBar/SearchBar";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import UsersNotFound from "../UsersNotFound/UsersNotFound";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 // Importing styles
 import "./AdminPage.css";
@@ -15,6 +16,8 @@ const API_URL =
   "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
 const AdminPage = () => {
+  // Declaring states
+  //
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -114,34 +117,38 @@ const AdminPage = () => {
 
   return (
     <div>
-      <div className="adminPage">
-        <SearchBar handleSearchUser={handleSearchUser} />
-        {users.length !== 0 ? (
-          <div className="container">
-            <Table
-              totalUsers={users}
-              users={currentUsers}
-              setUsers={setUsers}
-              deleteUser={deleteUser}
-              setUserToBeDeleted={setUserToBeDeleted}
-            />
-            <div className="footer">
-              <DeleteButton handleDeleteUsers={handleDeleteUsers} />
-
-              <Pagination
-                usersPerPage={usersPerPage}
-                totalUsers={users.length}
-                paginate={paginate}
-                prevPage={prevPage}
-                nextPage={nextPage}
-                selectedPage={currentPage}
+      {loading ? (
+        <LoadingPage message={"Loading Users..."} />
+      ) : (
+        <div className="adminPage">
+          <SearchBar handleSearchUser={handleSearchUser} />
+          {users.length !== 0 ? (
+            <div className="container">
+              <Table
+                totalUsers={users}
+                users={currentUsers}
+                setUsers={setUsers}
+                deleteUser={deleteUser}
+                setUserToBeDeleted={setUserToBeDeleted}
               />
+              <div className="footer">
+                <DeleteButton handleDeleteUsers={handleDeleteUsers} />
+
+                <Pagination
+                  usersPerPage={usersPerPage}
+                  totalUsers={users.length}
+                  paginate={paginate}
+                  prevPage={prevPage}
+                  nextPage={nextPage}
+                  selectedPage={currentPage}
+                />
+              </div>
             </div>
-          </div>
-        ) : (
-          <UsersNotFound />
-        )}
-      </div>
+          ) : (
+            <UsersNotFound />
+          )}
+        </div>
+      )}
     </div>
   );
 };
