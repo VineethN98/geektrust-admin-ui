@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import ReadOnlyRow from "../ReadOnlyRow/ReadOnlyRow";
 import EditableRow from "../EditableRow/EditableRow";
 
@@ -7,15 +7,48 @@ import "./Table.css";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 
-const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
+const Table = ({
+  users,
+  setUsers,
+  deleteUser,
+  totalUsers,
+  setUserToBeDeleted,
+}) => {
   const [editRowId, setEditRowId] = useState(null);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
+  const [selectCurrentUsers, setSelectCurrentUsers] = useState(false);
+  const [selectAll, setSelectAll] = useState(false);
 
   const [editUserData, setEditUserData] = useState({
     name: "",
     email: "",
     role: "",
   });
+
+  useEffect(() => {
+    console.log(selectedRowIds);
+    setUserToBeDeleted([...selectedRowIds]);
+  }, [selectedRowIds]);
+
+  useEffect(() => {
+    setSelectedRowIds([]);
+    setSelectCurrentUsers(false);
+    // setSelectCurrentUsers(false);
+  }, [users]);
+
+  useEffect(() => {
+    console.log("Selecting all users");
+    console.log(selectCurrentUsers);
+    if (!selectCurrentUsers) {
+      console.log("If");
+      const usersArray = [...users];
+      const usersToBeDeleted = usersArray.map((user) => user.id);
+      setSelectedRowIds([...usersToBeDeleted]);
+    } else {
+      console.log("else");
+      setSelectedRowIds([]);
+    }
+  }, [selectCurrentUsers]);
 
   // When edit button is clicked
   //
@@ -37,11 +70,19 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
     const index = selectedIndices.findIndex((id) => id === user.id);
 
     if (index === -1) {
-      setSelectedRowIds(user.id);
+      setSelectedRowIds([...selectedIndices, user.id]);
     } else {
       selectedIndices.splice(index, 1);
       setSelectedRowIds(selectedIndices);
     }
+  };
+
+  // When all users are selected
+  //
+  const selectAllUsers = (event) => {
+    console.log("Value of selectCurrentUsers");
+    console.log(selectCurrentUsers, selectAll);
+    setSelectCurrentUsers((selectCurrentUsers) => !selectCurrentUsers);
   };
 
   // When user fields are getting edited
@@ -85,7 +126,11 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
       <thead>
         <tr>
           <th>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onChange={selectAllUsers}
+              defaultChecked={selectCurrentUsers}
+            />
           </th>
           <th>Name</th>
           <th>Email</th>
@@ -116,6 +161,7 @@ const Table = ({ users, setUsers, deleteUser, totalUsers }) => {
                 deleteUser={deleteUser}
                 clickEditUser={clickEditUser}
                 selectUser={selectUser}
+                selectedRowIds={selectedRowIds}
               />
             )}
           </tr>

@@ -19,6 +19,7 @@ const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [currentUsers, setCurrentUsers] = useState([]);
+  const [usersToBeDeleted, setUserToBeDeleted] = useState([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -40,6 +41,29 @@ const AdminPage = () => {
     const userSlice = users.slice(indexOfFirstUser, indexOfLastUser);
     setCurrentUsers(userSlice);
   }, [users, currentPage]);
+
+  // TODO: Needs fixes, doesn't search if backspaced
+  useEffect(() => {
+    // Return all users if query is empty
+    //
+    if (query === "") {
+      setUsers(allUsers);
+      return;
+    }
+
+    // Search for users if query is not empty
+    //
+    const searchedUsers = users.filter((user) => {
+      if (user.name.toLowerCase().includes(query.toLowerCase())) {
+        return user;
+      } else if (user.email.toLowerCase().includes(query.toLowerCase())) {
+        return user;
+      } else if (user.role.toLowerCase().includes(query.toLowerCase())) {
+        return user;
+      }
+    });
+    setUsers(searchedUsers);
+  }, [query]);
 
   // Change Page
   //
@@ -82,27 +106,16 @@ const AdminPage = () => {
     setQuery(event.target.value);
   };
 
-  useEffect(() => {
-    // Return all users if query is empty
-    //
-    if (query === "") {
-      setUsers(allUsers);
-      return;
-    }
+  // Delete Selected Users
+  //
+  const handleDeleteUsers = (event) => {
+    event.preventDefault();
+    let usersLeft = [...users];
+    let deletingUsers = [...usersToBeDeleted];
 
-    // Search for users if query is not empty
-    //
-    const searchedUsers = users.filter((user) => {
-      if (user.name.toLowerCase().includes(query.toLowerCase())) {
-        return user;
-      } else if (user.email.toLowerCase().includes(query.toLowerCase())) {
-        return user;
-      } else if (user.role.toLowerCase().includes(query.toLowerCase())) {
-        return user;
-      }
-    });
-    setUsers(searchedUsers);
-  }, [query]);
+    usersLeft = usersLeft.filter((user) => !deletingUsers.includes(user.id));
+    setUsers([...usersLeft]);
+  };
 
   return (
     <div>
@@ -116,15 +129,23 @@ const AdminPage = () => {
             users={currentUsers}
             setUsers={setUsers}
             deleteUser={deleteUser}
+            setUserToBeDeleted={setUserToBeDeleted}
           />
-          <Pagination
-            usersPerPage={usersPerPage}
-            totalUsers={users.length}
-            paginate={paginate}
-            prevPage={prevPage}
-            nextPage={nextPage}
-            selectedPage={currentPage}
-          />
+          {/* TODO: Create own component if needed */}
+          <div className="footer">
+            <div className="btn" onClick={handleDeleteUsers}>
+              Delete Users
+            </div>
+
+            <Pagination
+              usersPerPage={usersPerPage}
+              totalUsers={users.length}
+              paginate={paginate}
+              prevPage={prevPage}
+              nextPage={nextPage}
+              selectedPage={currentPage}
+            />
+          </div>
         </div>
       )}
     </div>
