@@ -14,16 +14,19 @@ const Table = ({
   totalUsers,
   setUserToBeDeleted,
 }) => {
+  // Declaring states
+  //
   const [editRowId, setEditRowId] = useState(null);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-
   const [editUserData, setEditUserData] = useState({
     name: "",
     email: "",
     role: "",
   });
 
+  // Select users to be deleted
+  //
   useEffect(() => {
     setUserToBeDeleted([...selectedRowIds]);
   }, [selectedRowIds]);
@@ -35,6 +38,8 @@ const Table = ({
     setSelectAll(false);
   }, [users]);
 
+  // Select all users of current page
+  //
   useEffect(() => {
     const userIDs = users.map((user) => user.id);
     if (selectAll) {

@@ -40,6 +40,8 @@ const AdminPage = () => {
     fetchUsers();
   }, []);
 
+  // Pagination
+  //
   useEffect(() => {
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;

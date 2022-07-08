@@ -1,7 +1,7 @@
 import React from "react";
 
 // Importing styles
-import "./EditRow.css";
+import "./EditableRow.css";
 import { FaWindowClose } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 

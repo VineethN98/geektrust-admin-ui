@@ -2,7 +2,6 @@ import React from "react";
 
 // Importins styles
 import "./Pagination.css";
-// FaAngleDoubleLeft;
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
