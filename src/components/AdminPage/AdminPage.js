@@ -22,10 +22,10 @@ const AdminPage = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage, setUsersPerPage] = useState(10);
   const [currentUsers, setCurrentUsers] = useState([]);
   const [usersToBeDeleted, setUserToBeDeleted] = useState([]);
   const [query, setQuery] = useState("");
+  const usersPerPage = 10;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -33,7 +33,6 @@ const AdminPage = () => {
       const response = await axios.get(API_URL);
       setUsers(response.data);
       setAllUsers(response.data);
-      console.log(response.data);
       setLoading(false);
     };
 
@@ -63,9 +62,10 @@ const AdminPage = () => {
       } else if (user.role.toLowerCase().includes(query.toLowerCase())) {
         return user;
       }
+      return "";
     });
     setUsers(searchedUsers);
-  }, [query]);
+  }, [query, allUsers]);
 
   // Change Page
   //
@@ -123,7 +123,11 @@ const AdminPage = () => {
         <LoadingPage message={"Loading Users..."} />
       ) : (
         <div className="adminPage">
-          <SearchBar handleSearchUser={handleSearchUser} />
+          <SearchBar
+            handleSearchUser={handleSearchUser}
+            placeholderText={"Search by name, email or role"}
+            query={query}
+          />
           {users.length !== 0 ? (
             <div className="container">
               <Table
@@ -134,7 +138,10 @@ const AdminPage = () => {
                 setUserToBeDeleted={setUserToBeDeleted}
               />
               <div className="footer">
-                <DeleteButton handleDeleteUsers={handleDeleteUsers} />
+                <DeleteButton
+                  handleDeleteUsers={handleDeleteUsers}
+                  deleteText="Delete Selected"
+                />
 
                 <Pagination
                   usersPerPage={usersPerPage}

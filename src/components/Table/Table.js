@@ -4,8 +4,6 @@ import EditableRow from "../EditableRow/EditableRow";
 
 // Importing styles
 import "./Table.css";
-import { FaEdit } from "react-icons/fa";
-import { FaTrashAlt } from "react-icons/fa";
 
 const Table = ({
   users,
@@ -29,7 +27,7 @@ const Table = ({
   //
   useEffect(() => {
     setUserToBeDeleted([...selectedRowIds]);
-  }, [selectedRowIds]);
+  }, [selectedRowIds, setUserToBeDeleted]);
 
   // To reset states when the page changes
   //
@@ -47,7 +45,7 @@ const Table = ({
     } else {
       setSelectedRowIds([]);
     }
-  }, [selectAll]);
+  }, [selectAll, users]);
 
   // When edit button is clicked
   //
@@ -111,8 +109,6 @@ const Table = ({
       }
       return user;
     });
-
-    console.log(newUsers);
 
     setUsers(newUsers);
     setEditRowId(null);

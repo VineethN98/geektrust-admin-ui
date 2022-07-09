@@ -3,10 +3,10 @@ import React from "react";
 // Importing styles
 import "./DeleteButton.css";
 
-const DeleteButton = ({ handleDeleteUsers }) => {
+const DeleteButton = ({ deleteText, handleDeleteUsers }) => {
   return (
     <div className="btn" onClick={handleDeleteUsers}>
-      Delete Selected
+      {deleteText}
     </div>
   );
 };
